@@ -40,3 +40,6 @@ Push this folder to GitHub and import it into Vercel, or run `vercel` from this 
 
 ## Product promise
 **Search your whole company like Google — without an enterprise contract.**
+
+
+TinyGlean live build
