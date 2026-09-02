@@ -1,7 +1,8 @@
 import GoogleButton from '@/components/google-button'
+import AuthRedirect from '@/components/auth-redirect'
 
 export default function Home(){
-  return <main className="landing">
+  return <main className="landing"><AuthRedirect />
     <div className="wrap">
       <nav className="nav">
         <a className="brand" href="/"><span className="mark">T</span>TinyGlean</a>
@@ -16,6 +17,7 @@ export default function Home(){
         <div className="heroActions"><GoogleButton label="Search my company →" /><a className="btn" href="#demo">See the demo</a></div>
 
         <div className="proof" id="demo">
+          <div className="preview-label">Product preview — sign in to search your own workspace</div>
           <div className="appMock">
             <aside className="sideMock">
               <div className="smallbrand"><span className="mark">T</span>TinyGlean</div>
