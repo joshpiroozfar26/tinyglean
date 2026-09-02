@@ -1,3 +1,26 @@
-import './globals.css'
-export const metadata = { title: 'TinyGlean — Search your company like Google', description: 'AI company search for Gmail and Google Drive without enterprise complexity.' }
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}</body></html>}
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "TinyGlean — Search your Google workspace",
+  description: "One private search across your Gmail and Google Drive.",
+};
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  return (
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>{children}</body>
+    </html>
+  );
+}
