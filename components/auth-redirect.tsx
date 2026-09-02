@@ -13,7 +13,15 @@ export default function AuthRedirect() {
 
     void (async () => {
       const supabase = createClient();
-      const code = new URLSearchParams(window.location.search).get("code");
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      const oauthError = params.get("error_description") || params.get("error");
+
+      if (oauthError) {
+        if (active) setMessage(`Google sign-in failed: ${oauthError}`);
+        return;
+      }
+
       const { data: sessionData } = await supabase.auth.getSession();
 
       if (sessionData.session) {
@@ -27,7 +35,7 @@ export default function AuthRedirect() {
 
       const { error } = await supabase.auth.exchangeCodeForSession(code);
       if (error) {
-        if (active) setMessage("Google sign-in could not be completed. Please try again.");
+        if (active) setMessage(`Google sign-in failed: ${error.message}`);
         return;
       }
 

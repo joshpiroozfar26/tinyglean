@@ -4,7 +4,7 @@ export default function GoogleButton({label='Continue with Google',compact=false
   async function signIn(){
     const supabase=createClient()
     await supabase.auth.signInWithOAuth({provider:'google',options:{
-      redirectTo:`${location.origin}/auth/callback`,
+      redirectTo:location.origin,
       scopes:'openid email profile https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.readonly',
       queryParams:{access_type:'offline',prompt:'consent'}
     }})
