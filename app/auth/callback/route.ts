@@ -1,14 +1,2 @@
-import { createClient } from "@/lib/supabase/server";
-import { NextResponse } from "next/server";
-
-export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
-  const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/dashboard";
-  if (code) {
-    const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) return NextResponse.redirect(`${origin}${next}`);
-  }
-  return NextResponse.redirect(`${origin}/?auth_error=1`);
-}
+import {NextResponse,type NextRequest} from 'next/server';import {createServerClient} from '@supabase/ssr';
+export async function GET(request:NextRequest){const u=process.env.NEXT_PUBLIC_SUPABASE_URL,k=process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY||process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;const url=new URL(request.url);const code=url.searchParams.get('code');if(!u||!k||!code)return NextResponse.redirect(new URL('/login?error=auth',url.origin));const response=NextResponse.redirect(new URL('/dashboard',url.origin));const s=createServerClient(u,k,{cookies:{getAll(){return request.cookies.getAll()},setAll(c){c.forEach(({name,value,options})=>response.cookies.set(name,value,options))}}});const {error}=await s.auth.exchangeCodeForSession(code);if(error)return NextResponse.redirect(new URL('/login?error=auth',url.origin));return response}
